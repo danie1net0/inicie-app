@@ -1,0 +1,4 @@
+#!/usr/bin/env sh
+
+ng lint
+ngx prettier -c .

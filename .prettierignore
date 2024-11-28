@@ -1,0 +1,8 @@
+.husky
+.angular
+.idea
+.docker
+node_modules
+dist
+src/assets
+coverage
