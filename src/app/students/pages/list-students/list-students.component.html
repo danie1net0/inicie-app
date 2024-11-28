@@ -1,1 +1,21 @@
-<p>list-students works!</p>
+<mat-card appearance="outlined">
+  <mat-card-content>
+    <mat-toolbar class="flex justify-between !bg-transparent">
+      <span>Alunos</span>
+
+      <button mat-icon-button (click)="onAdd()">
+        <mat-icon>add</mat-icon>
+      </button>
+    </mat-toolbar>
+
+    <div *ngIf="students$ | async as students; else spinner">
+      <app-students-table [students]="students.data" (edit)="onEdit($event)" (delete)="onDelete($event)" />
+    </div>
+
+    <ng-template #spinner>
+      <div class="flex justify-center items-center pt-5">
+        <mat-spinner />
+      </div>
+    </ng-template>
+  </mat-card-content>
+</mat-card>
