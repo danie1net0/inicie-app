@@ -1,12 +1,12 @@
 export interface ApiPaginatedResponse<T> {
   data: T[];
-  links: {
+  links?: {
     first: string;
     last: string;
     next: string;
     prev: string;
   };
-  meta: {
+  meta?: {
     current_page: number;
     from: number;
     last_page: number;
