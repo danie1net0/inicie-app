@@ -1,14 +1,16 @@
 import { Component, inject } from '@angular/core';
-import { MatCard, MatCardContent } from '@angular/material/card';
+import { MatCardModule } from '@angular/material/card';
 import { MatToolbar } from '@angular/material/toolbar';
 import { MatIconButton } from '@angular/material/button';
-import { MatIcon } from '@angular/material/icon';
+import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
+import { MatPaginatorModule } from '@angular/material/paginator';
 import { catchError, Observable, of } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { StudentsTableComponent } from '../../components/students-table/students-table.component';
+import { PaginationComponent } from '../../../shared/components/pagination/pagination.component';
 import { ApiPaginatedResponse } from '../../../shared/interfaces/api-paginated-response';
 import { Student } from '../../interfaces/student';
 import { StudentService } from '../../services/student.service';
@@ -16,14 +18,15 @@ import { StudentService } from '../../services/student.service';
 @Component({
   selector: 'app-list-students',
   imports: [
-    MatCard,
-    MatCardContent,
+    MatCardModule,
+    MatPaginatorModule,
     MatToolbar,
-    MatIconButton,
-    MatIcon,
+    MatIconModule,
     MatProgressSpinner,
     StudentsTableComponent,
     CommonModule,
+    PaginationComponent,
+    MatIconButton,
   ],
   templateUrl: './list-students.component.html',
   styleUrl: './list-students.component.scss',
@@ -49,8 +52,12 @@ export class ListStudentsComponent {
     alert(id);
   }
 
-  private refresh$(): Observable<ApiPaginatedResponse<Student>> {
-    return this.studentsService.index().pipe(
+  public onChangePage(page: number): void {
+    this.students$ = this.refresh$(page);
+  }
+
+  private refresh$(page = 1): Observable<ApiPaginatedResponse<Student>> {
+    return this.studentsService.index({ page }).pipe(
       catchError((): Observable<ApiPaginatedResponse<Student>> => {
         alert('Erro ao carregar alunos!');
         return of({
