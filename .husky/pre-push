@@ -1,4 +1,4 @@
 #!/usr/bin/env sh
 
 ng lint
-ngx prettier -c .
+npm run prettier -c .
