@@ -1,0 +1,13 @@
+<mat-card appearance="outlined">
+  <mat-card-content>
+    <mat-toolbar class="!bg-transparent">
+      <button mat-icon-button class="mr-3 -ml-3" (click)="onGoBack()">
+        <mat-icon>arrow_back</mat-icon>
+      </button>
+
+      <span>Cadastrar Aluno</span>
+    </mat-toolbar>
+
+    <app-student-form [form]="form" (formSubmit)="onSubmit($event)" />
+  </mat-card-content>
+</mat-card>

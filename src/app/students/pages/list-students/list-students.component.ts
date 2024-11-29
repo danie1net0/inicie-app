@@ -41,7 +41,7 @@ export class ListStudentsComponent {
   public students$: Observable<ApiPaginatedResponse<Student>> = this.refresh$();
 
   public async onAdd(): Promise<void> {
-    await this.router.navigate(['criar'], {
+    await this.router.navigate(['cadastrar'], {
       relativeTo: this.activatedRoute,
     });
   }

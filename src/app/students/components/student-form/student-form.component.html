@@ -1,0 +1,27 @@
+<form [formGroup]="form" class="container mx-auto" (ngSubmit)="onSubmit()">
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <mat-form-field>
+      <mat-label>Nome</mat-label>
+
+      <input matInput formControlName="name" #name />
+
+      <mat-error *ngIf="form.get('name')?.invalid">
+        {{ getErrorMessage('name') }}
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>E-mail</mat-label>
+
+      <input matInput formControlName="email" />
+
+      <mat-error *ngIf="form.get('email')?.invalid">
+        {{ getErrorMessage('email') }}
+      </mat-error>
+    </mat-form-field>
+  </div>
+
+  <div class="flex justify-end">
+    <button mat-raised-button color="primary" type="submit">Salvar</button>
+  </div>
+</form>

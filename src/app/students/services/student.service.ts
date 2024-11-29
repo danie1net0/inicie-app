@@ -21,6 +21,10 @@ export class StudentService {
     return this.httpClient.get<ApiPaginatedResponse<Student>>(this.endpoint, params).pipe(first());
   }
 
+  public store(student: Student): Observable<Student> {
+    return this.httpClient.post<Student>(this.endpoint, student).pipe(first());
+  }
+
   public destroy(id: number): Observable<void> {
     return this.httpClient.delete<void>(`${this.endpoint}/${id}`).pipe(first());
   }
