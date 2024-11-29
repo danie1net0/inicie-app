@@ -1,0 +1,5 @@
+<mat-paginator
+  [length]="resources.meta?.total"
+  [pageSize]="resources.meta?.per_page"
+  (page)="onChangePage($event)"
+  [pageIndex]="pageIndex" />
