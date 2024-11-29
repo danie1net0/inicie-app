@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { first, Observable } from 'rxjs';
+import { first, map, Observable } from 'rxjs';
 
 import { ApiPaginatedResponse } from '../../shared/interfaces/api-paginated-response';
 import { Student } from '../interfaces/student';
@@ -21,8 +21,19 @@ export class StudentService {
     return this.httpClient.get<ApiPaginatedResponse<Student>>(this.endpoint, params).pipe(first());
   }
 
+  public show(id: number): Observable<Student> {
+    return this.httpClient.get<Student>(`${this.endpoint}/${id}`).pipe(
+      first(),
+      map((student): Student => student.data),
+    );
+  }
+
   public store(student: Student): Observable<Student> {
     return this.httpClient.post<Student>(this.endpoint, student).pipe(first());
+  }
+
+  public update(student: Student): Observable<Student> {
+    return this.httpClient.put<Student>(`${this.endpoint}/${student.id}`, student).pipe(first());
   }
 
   public destroy(id: number): Observable<void> {

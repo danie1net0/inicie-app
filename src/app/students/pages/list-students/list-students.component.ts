@@ -47,7 +47,9 @@ export class ListStudentsComponent {
   }
 
   public async onEdit(id: number): Promise<void> {
-    alert(id);
+    await this.router.navigate([`editar/${id}`], {
+      relativeTo: this.activatedRoute,
+    });
   }
 
   public async onDelete(id: number): Promise<void> {
