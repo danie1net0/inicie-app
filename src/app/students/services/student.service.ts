@@ -5,6 +5,7 @@ import { first, map, Observable } from 'rxjs';
 import { ApiPaginatedResponse } from '../../shared/interfaces/api-paginated-response';
 import { Student } from '../interfaces/student';
 import { environment } from '../../../environments/environment';
+import { ApiResponse } from '../../shared/interfaces/api-response';
 
 @Injectable({
   providedIn: 'root',
@@ -22,9 +23,9 @@ export class StudentService {
   }
 
   public show(id: number): Observable<Student> {
-    return this.httpClient.get<Student>(`${this.endpoint}/${id}`).pipe(
+    return this.httpClient.get<ApiResponse<Student>>(`${this.endpoint}/${id}`).pipe(
       first(),
-      map((student): Student => student.data),
+      map((student: ApiResponse<Student>): Student => student.data),
     );
   }
 
