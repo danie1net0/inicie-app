@@ -10,7 +10,7 @@
 
     <div *ngIf="students$ | async as students; else spinner">
       <app-students-table [students]="students.data" (edit)="onEdit($event)" (delete)="onDelete($event)" />
-      <app-pagination [resources]="students" (page)="onChangePage($event)" />
+      <app-pagination *ngIf="students.meta" [resources]="students" (page)="onChangePage($event)" />
     </div>
 
     <ng-template #spinner>

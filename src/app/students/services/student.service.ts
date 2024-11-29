@@ -21,6 +21,10 @@ export class StudentService {
     return this.httpClient.get<ApiPaginatedResponse<Student>>(this.endpoint, params).pipe(first());
   }
 
+  public destroy(id: number): Observable<void> {
+    return this.httpClient.delete<void>(`${this.endpoint}/${id}`).pipe(first());
+  }
+
   private params(params: object = {}): HttpParams {
     let httpParams: HttpParams = new HttpParams();
 

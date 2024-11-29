@@ -14,6 +14,7 @@ import { PaginationComponent } from '../../../shared/components/pagination/pagin
 import { ApiPaginatedResponse } from '../../../shared/interfaces/api-paginated-response';
 import { Student } from '../../interfaces/student';
 import { StudentService } from '../../services/student.service';
+import { DialogService } from '../../../shared/services/dialog.service';
 
 @Component({
   selector: 'app-list-students',
@@ -35,6 +36,7 @@ export class ListStudentsComponent {
   private readonly router: Router = inject(Router);
   private readonly activatedRoute: ActivatedRoute = inject(ActivatedRoute);
   private readonly studentsService: StudentService = inject(StudentService);
+  private readonly dialogService: DialogService = inject(DialogService);
 
   public students$: Observable<ApiPaginatedResponse<Student>> = this.refresh$();
 
@@ -49,7 +51,24 @@ export class ListStudentsComponent {
   }
 
   public async onDelete(id: number): Promise<void> {
-    alert(id);
+    const confirmation: boolean = await this.dialogService.confirmation(
+      'Deletar aluno',
+      'Você tem certeza que deseja remover este aluno?',
+    );
+
+    if (!confirmation) {
+      return;
+    }
+
+    this.studentsService.destroy(id).subscribe({
+      next: (): void => {
+        this.dialogService.info('Sucesso', 'Aluno removido com êxito!');
+        this.students$ = this.refresh$();
+      },
+      error: (): void => {
+        this.dialogService.info('Ooops...', 'Error ao remover aluno, contate o suporte técnico.');
+      },
+    });
   }
 
   public onChangePage(page: number): void {
@@ -59,7 +78,8 @@ export class ListStudentsComponent {
   private refresh$(page = 1): Observable<ApiPaginatedResponse<Student>> {
     return this.studentsService.index({ page }).pipe(
       catchError((): Observable<ApiPaginatedResponse<Student>> => {
-        alert('Erro ao carregar alunos!');
+        this.dialogService.info('Ooops...', 'Erro ao carregar alunos, contate o suporte técnico.');
+
         return of({
           data: [],
         });
