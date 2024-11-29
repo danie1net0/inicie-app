@@ -3,11 +3,10 @@ import { MatPaginator, MatPaginatorIntl, PageEvent } from '@angular/material/pag
 
 import { ApiPaginatedResponse } from '../../interfaces/api-paginated-response';
 import { CustomPaginatorIntl } from './custom-paginator-intl';
-import { JsonPipe } from '@angular/common';
 
 @Component({
   selector: 'app-pagination',
-  imports: [MatPaginator, JsonPipe],
+  imports: [MatPaginator],
   templateUrl: './pagination.component.html',
   styleUrl: './pagination.component.scss',
   providers: [{ provide: MatPaginatorIntl, useClass: CustomPaginatorIntl }],
